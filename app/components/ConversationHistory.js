@@ -16,7 +16,7 @@ React.useEffect(() => {
 },[history]);
   return (
     <div onClick={hideSideBar} className="w-[100%] bg-[#D7C7F433]">
-      <p className="text-center mt-[10%] mb-[5%] font-ubuntu text-[28px] font-normal leading-8 text-left">
+      <p className="mt-[10%] mb-[5%] font-ubuntu text-[28px] font-normal leading-8 text-left">
         Conversation History
       </p>
       <p className="ml-[3%] mb-2 font-ubuntu text-[20px] font-normal leading-5 ">
