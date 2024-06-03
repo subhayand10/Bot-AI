@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import QATabs from "./QATabs";
 import CustomInput from "./CustomInput";
 import ai_logo from "../../public/assets/ai_logo.png";
 import sender_logo from "../../public/assets/sender_logo.png";
 
 const ConversationHistory = ({ hideSideBar }) => {
-   const [history, setHistory] = React.useState(() => {
-  const storedHistory = localStorage.getItem('ConversationHistory');
-  return storedHistory ? JSON.parse(storedHistory) : [];
-});
+  const [history, setHistory] = useState(() => {
+    if (typeof window !== "undefined") {
+      const storedHistory = localStorage.getItem("ConversationHistory");
+      return storedHistory ? JSON.parse(storedHistory) : [];
+    }
+    return [];
+  });
 
+  useEffect(() => {
+    console.log(history);
+  }, [history]);
 
-React.useEffect(() => {
-    console.log(history)
-},[history]);
   return (
     <div onClick={hideSideBar} className="w-[100%] bg-[#D7C7F433]">
       <p className="mt-[10%] mb-[5%] font-ubuntu text-[28px] font-normal leading-8 text-left">
@@ -25,7 +28,9 @@ React.useEffect(() => {
       {history.map((item, index) => {
         return (
           <QATabs
-          spacing={index!=history.length-1&&index%2==1?"mb-4":""}
+            spacing={
+              index !== history.length - 1 && index % 2 === 1 ? "mb-4" : ""
+            }
             historyPage={true}
             key={index}
             id={item.answer && item.answer.id ? item.answer.id : "Q"}
