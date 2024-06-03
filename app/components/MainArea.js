@@ -11,10 +11,15 @@ const noOfCards = [1, 2, 3, 4];
 const MainArea = ({ hideSideBar }) => {
   const [asked, setAsked] = React.useState(false);
   const [conversation, setConversation] = React.useState([]);
+  const [save,setSave] = React.useState(false);
 
   React.useEffect(() => {
-    console.log(conversation)
-  },[conversation])
+    console.log(conversation);
+  }, [conversation]);
+
+    React.useEffect(() => {
+      localStorage.setItem("ConversationHistory", JSON.stringify(conversation));
+    }, [save]);
   return (
     <div onClick={hideSideBar} className="w-[100%] bg-[#D7C7F433]">
       <p className="ml-6 font-ubuntu text-[28px] font-bold leading-32.17 text-[#9785BA]">
@@ -46,12 +51,11 @@ const MainArea = ({ hideSideBar }) => {
                 id={item.answer && item.answer.id ? item.answer.id : "Q"}
                 img={item.question ? sender_logo : ai_logo}
                 sender={item.question ? "You" : "Soul AI"}
-                content={
-                  item.question
-                    ? item.question
-                    : typeof item.answer == "string"
-                    ? item.answer
-                    : item.answer.ans
+                content={item.question ? item.question : item.answer.ans}
+                feedbackContent={
+                  item.answer && item.answer.ans && item.feedback
+                    ? item.feedback
+                    : ""
                 }
                 time={"10:54 AM"}
               />
@@ -60,10 +64,7 @@ const MainArea = ({ hideSideBar }) => {
         </>
       )}
       <div>
-        <CustomInput
-          setConversation={setConversation}
-          setAsked={setAsked}
-        />
+        <CustomInput setSave={setSave} setConversation={setConversation} setAsked={setAsked} />
       </div>
     </div>
   );

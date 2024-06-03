@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import thumbs_up from "../../public/assets/thumbs_up.png";
 import thumbs_down from "../../public/assets/thumbs_down.png";
 import { Button } from "@/app/components/ui/button";
@@ -12,29 +12,64 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose
+  DialogClose,
 } from "@/app/components/ui/dialog";
 import { Input } from "@/app/components/ui/input";
 import bulb from "../../public/assets/bulb.png";
+import Feedback from "./Feedback";
+import Rating from "./Rating";
 
-const QATabs = ({ img, sender, content, time,id,setConversation }) => {
-    const [feedback,setFeedback]=React.useState("")
-    const handleChange = (e)=>{
-        setFeedback(e.target.value);
-    }
-    const storeFeedback = (e)=>{
-        e.preventDefault();
-        setConversation((convo)=>{
-            return convo.map(item=>{
-                if(item.answer&&typeof(item.answer!=="string")&&item.answer.id===id){
-                    item.feedback=feedback;
-                }
-                return item;
-            })
-        })
-    }
+const QATabs = ({
+  img,
+  sender,
+  content,
+  time,
+  id,
+  setConversation,
+  feedbackContent,
+  historyPage,
+  spacing,
+}) => {
+  const [feedback, setFeedback] = React.useState("");
+  const [showRating, setShowRating] = React.useState(false);
+  const [value, setValue] = React.useState(0);
+  const handleChange = (e) => {
+    setFeedback(e.target.value);
+  };
+  const storeFeedback = (e) => {
+    e.preventDefault();
+    if(historyPage)
+      return
+    setConversation((convo) => {
+      return convo.map((item) => {
+        if (item.answer && item.answer.id === id) {
+          item.feedback = feedback;
+        }
+        return item;
+      });
+    });
+  };
+  const handleRating = () => {
+    setShowRating(true);
+  };
+  useEffect(() => {
+    if (historyPage)
+      return
+    setConversation((convo) => {
+      return convo.map((item) => {
+        if (item.answer && item.answer.id === id) {
+          item.rating = value;
+        }
+        return item;
+      });
+    });
+  }, [value]);
   return (
-    <div className="w-[95%] mx-auto flex gap-6 p-5 bg-[#D7C7F421]">
+    <div
+      className={`w-[95%] mx-auto flex gap-6 p-5 ${
+        !historyPage ? "bg-[#D7C7F421]" : "bg-[#BFACE2]"
+      } ${spacing}`}
+    >
       <div>
         <div className="w-[50px] h-[50px]">
           <Image src={img} alt="logo" />
@@ -51,6 +86,7 @@ const QATabs = ({ img, sender, content, time,id,setConversation }) => {
             className={`w-[20px] h-[20px] ${
               sender !== "You" ? "block" : "hidden"
             }`}
+            onClick={handleRating}
           >
             <Image src={thumbs_up} alt="thumbs_up" />
           </div>
@@ -87,16 +123,20 @@ const QATabs = ({ img, sender, content, time,id,setConversation }) => {
                 </div>
               </div>
               <DialogFooter>
-                  <Button
-                    type="submit"
-                    onClick={storeFeedback}
-                    className="bg-[#D7C7F4] text-[black]"
-                  >
-                    Submit
-                  </Button>
+                <Button
+                  type="submit"
+                  onClick={storeFeedback}
+                  className="bg-[#D7C7F4] text-[black]"
+                >
+                  Submit
+                </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
+        </div>
+        <div className="flex flex-col gap-3 mt-2">
+          {feedbackContent && <Feedback text={feedbackContent} />}
+          {showRating && <Rating value={value} setValue={setValue} />}
         </div>
       </div>
     </div>
