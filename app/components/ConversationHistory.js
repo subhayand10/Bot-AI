@@ -6,7 +6,7 @@ import sender_logo from "../../public/assets/sender_logo.png";
 
 const ConversationHistory = ({ hideSideBar }) => {
    const [history, setHistory] = React.useState(() => {
-  const storedHistory = window.localStorage.getItem('ConversationHistory');
+  const storedHistory = localStorage.getItem('ConversationHistory');
   return storedHistory ? JSON.parse(storedHistory) : [];
 });
 
