@@ -35,12 +35,16 @@ const QATabs = ({
   const [showRating, setShowRating] = React.useState(false);
   const [value, setValue] = React.useState(0);
   const [showThumbs, setShowThumbs] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
   const handleChange = (e) => {
     setFeedback(e.target.value);
   };
   const storeFeedback = (e) => {
     e.preventDefault();
-    if (historyPage) return;
+    if (historyPage) 
+      {
+        setOpen(false)
+        return;}
     setConversation((convo) => {
       return convo.map((item) => {
         if (item.answer && item.answer.id === id) {
@@ -49,6 +53,7 @@ const QATabs = ({
         return item;
       });
     });
+    setOpen(false);
   };
   const handleRating = () => {
     setShowRating(true);
@@ -107,7 +112,7 @@ const QATabs = ({
             </div>
           )}
 
-          <Dialog>
+          <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               {!historyPage && (
                 <div
@@ -141,13 +146,13 @@ const QATabs = ({
                 </div>
               </div>
               <DialogFooter>
-                <Button
-                  type="submit"
-                  onClick={storeFeedback}
-                  className="bg-[#D7C7F4] text-[black]"
-                >
-                  Submit
-                </Button>
+                  <Button
+                    type="submit"
+                    onClick={storeFeedback}
+                    className="bg-[#D7C7F4] text-[black]"
+                  >
+                    Submit
+                  </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
