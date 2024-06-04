@@ -64,6 +64,12 @@ const QATabs = ({
       });
     });
   }, [value]);
+    useEffect(() => {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth",
+      });
+    }, []);
   return (
     <div
       className={`w-[95%] mx-auto flex gap-6 p-5 ${
@@ -81,9 +87,9 @@ const QATabs = ({
           {content}
         </p>
         <div className="flex gap-3 items-center mt-5 font-open-sans text-[12px] font-normal text-[#0000009E]">
-          <p>{time}</p>
+          <p>{time()}</p>
           <div
-            className={`w-[20px] h-[20px] ${
+            className={`w-[20px] h-[20px] hover:cursor-pointer ${
               sender !== "You" ? "block" : "hidden"
             }`}
             onClick={handleRating}

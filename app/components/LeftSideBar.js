@@ -45,8 +45,8 @@ const LeftSideBar = ({showSidebar,setShowSidebar}) => {
           </Link>
         </div>
         <Link href="/pastConversations">
-        <div className="Past Conversation text-center mx-auto rounded-lg h-[70px] w-[80%] text-[#414146] bg-[#D7C7F4]">
-          <button className="h-[100%]" >Past Conversation</button>
+        <div className="Past Conversation text-center mx-auto rounded-lg h-[70px] w-[100%] sm:w-[80%] text-[#414146] bg-[#D7C7F4]">
+          <button className="h-[100%] " >Past Conversation</button>
         </div>
         </Link>
       </div>

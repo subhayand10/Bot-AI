@@ -25,11 +25,20 @@ const CustomInput = ({ setConversation, setAsked,setSave }) => {
   }
 
   const getResponseByQuestion = (question) => {
-    const faqItem = data.find((item) => item.question == question);
+    const faqItem = data.find(
+      (item) => question.includes(item.question)
+    );
     return faqItem
       ? {ans:faqItem.response,id:faqItem.id}
       : {ans:"As an AI Language Model, I don’t have the details",id:generateUniqueId()};
   };
+
+  const handleAskEnter = (event) => {
+    if (event.key != "Enter") {
+      return;
+    }
+    handleAsk();
+  }
   const handleAsk = () => {
     const ans = getResponseByQuestion(text);
     setConversation((conversation) => {
@@ -43,14 +52,14 @@ const CustomInput = ({ setConversation, setAsked,setSave }) => {
   };
 
 
-
   return (
-    <div className="w-[95%] mx-auto flex gap-6">
+    <div className="w-[95%] mx-auto  flex gap-6">
       <input
         value={text}
         onChange={handleChange}
+        onKeyDown={handleAskEnter}
         type="text"
-        className="bg-white border border-[#00000073] w-[80%] h-[41px] rounded-tl-[5px] border-t border-b-0 border-r-0 border-l-0"
+        className="bg-white border border-[#00000073] w-[80%] h-[41px] rounded-tl-[5px] border-t border-b-0 border-r-0 border-l-0 ml-2 focus:outline-none"
       />
       <button
         onClick={handleAsk}

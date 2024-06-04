@@ -7,19 +7,20 @@ import CustomInput from "./CustomInput";
 import ai_logo from "../../public/assets/ai_logo.png";
 import sender_logo from "../../public/assets/sender_logo.png";
 import QATabs from "./QATabs";
+import getCurrentTime from "../utils/timeFunc";
 const noOfCards = [1, 2, 3, 4];
 const MainArea = ({ hideSideBar }) => {
   const [asked, setAsked] = React.useState(false);
   const [conversation, setConversation] = React.useState([]);
-  const [save,setSave] = React.useState(false);
+  const [save, setSave] = React.useState(false);
 
   React.useEffect(() => {
     console.log(conversation);
   }, [conversation]);
 
-    React.useEffect(() => {
-      localStorage.setItem("ConversationHistory", JSON.stringify(conversation));
-    }, [save]);
+  if (save)
+    localStorage.setItem("ConversationHistory", JSON.stringify(conversation));
+
   return (
     <div onClick={hideSideBar} className="w-[100%] bg-[#D7C7F433]">
       <p className="ml-6 font-ubuntu text-[28px] font-bold leading-32.17 text-[#9785BA]">
@@ -33,12 +34,15 @@ const MainArea = ({ hideSideBar }) => {
               <Image src={main_logo} alt="logo" />
             </div>
           </div>
-          <div className="w-[95%] mx-auto flex flex-wrap gap-2">
-            {noOfCards.map((card, i) => {
-              return (
-                <QuestionCard question={"Hi,what is the weather"} key={i} />
-              );
-            })}
+          <div className="sm:w-[95%] w-[100%] sm:mx-auto flex flex-wrap gap-2">
+            <QuestionCard
+              question={"What's the difference between GET and POST requests?"}
+            />
+            <QuestionCard question={"Can you explain RESTful APIs?"} />
+            <QuestionCard question={"What is a Promise in JavaScript?"} />
+            <QuestionCard
+              question={"How do you handle errors in async/await?"}
+            />
           </div>
         </>
       ) : (
@@ -57,14 +61,18 @@ const MainArea = ({ hideSideBar }) => {
                     ? item.feedback
                     : ""
                 }
-                time={"10:54 AM"}
+                time={getCurrentTime}
               />
             );
           })}
         </>
       )}
       <div>
-        <CustomInput setSave={setSave} setConversation={setConversation} setAsked={setAsked} />
+        <CustomInput
+          setSave={setSave}
+          setConversation={setConversation}
+          setAsked={setAsked}
+        />
       </div>
     </div>
   );

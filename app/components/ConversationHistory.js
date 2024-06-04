@@ -3,7 +3,7 @@ import QATabs from "./QATabs";
 import CustomInput from "./CustomInput";
 import ai_logo from "../../public/assets/ai_logo.png";
 import sender_logo from "../../public/assets/sender_logo.png";
-
+import getCurrentTime from "../utils/timeFunc";
 const ConversationHistory = ({ hideSideBar }) => {
   const [history, setHistory] = useState(() => {
     if (typeof window !== "undefined") {
@@ -19,7 +19,7 @@ const ConversationHistory = ({ hideSideBar }) => {
 
   return (
     <div onClick={hideSideBar} className="w-[100%] bg-[#D7C7F433]">
-      <p className="mt-[10%] mb-[5%] font-ubuntu text-[28px] font-normal leading-8 text-left">
+      <p className="mt-[10%] text-center mb-[5%] font-ubuntu text-[28px] font-normal leading-8 ">
         Conversation History
       </p>
       <p className="ml-[3%] mb-2 font-ubuntu text-[20px] font-normal leading-5 ">
@@ -42,7 +42,7 @@ const ConversationHistory = ({ hideSideBar }) => {
                 ? item.feedback
                 : ""
             }
-            time={"10:54 AM"}
+            time={getCurrentTime}
           />
         );
       })}

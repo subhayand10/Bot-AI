@@ -302,5 +302,11 @@ export default [
     response:
       "Staying updated involves following industry news, participating in developer communities, attending conferences and workshops, taking online courses, reading technical blogs and publications, and experimenting with new technologies and tools.",
   },
+  {
+    id: 51,
+    question: "Hi",
+    response:
+      "Hi,I'm AI Bot",
+  },
 ];
   
