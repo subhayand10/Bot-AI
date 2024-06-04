@@ -20,7 +20,6 @@ export default function Star({value,setValue}) {
           onChange={(event, newValue) => {
             setValue(newValue);
             setReadOnly("read-only");
-            
           }}
         />
       )}

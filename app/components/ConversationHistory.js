@@ -43,6 +43,7 @@ const ConversationHistory = ({ hideSideBar }) => {
                 : ""
             }
             time={getCurrentTime}
+            savedRating={item.rating?item.rating:0}
           />
         );
       })}
